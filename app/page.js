@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import React, { useEffect, useState } from "react";
 import FormA from "./FormA";
 import FormB from "./FormB";
@@ -12,9 +12,9 @@ const App = () => {
   function onSubmit(show) {
     setFormData({
       showName: show,
-      formType: step==2 ? "Form A" : "Form B",
-      age: age,
-    })
+      formType: step == 2 ? "Form A" : "Form B",
+      age: age
+    });
     setStep(4);
   }
 
@@ -24,6 +24,12 @@ const App = () => {
     setStep(1);
   }
 
+  function handleAge(e) {
+    const val = e.target.value;
+    if(!isNaN(val))
+    setAge(val);
+  }
+
   console.log("formData", formData);
   // console.log({step, age});
   // console.log("formdata", formData.show);
@@ -31,11 +37,10 @@ const App = () => {
     <div>
       {(step === 1 || !age) && (
         <div id="start-page">
-
           <h1>Step 1: Select Form Type and Enter Age</h1>
           <label>
             Enter your age:
-            <input value={age} onChange={(e) => setAge(e.target.value)} />
+            <input value={age} onChange={handleAge} />
           </label>
           <br />
           <label>
@@ -47,32 +52,34 @@ const App = () => {
             </select>
           </label>
           <br />
-
-
         </div>
       )}
-      {(step === 2 && age) && (
+      {step === 2 && age && (
         <div>
           <FormA age={age} onSubmit={onSubmit} />
         </div>
       )}
-      {(step === 3 && age) && (
+      {step === 3 && age && (
         <div>
           <FormB age={age} onSubmit={onSubmit} />
         </div>
       )}
       {(step === 2 || step === 3) && age ? (
-        <button id="go-back" onClick={() => setStep(1)}>Go Back</button>
+        <button id="go-back" onClick={() => setStep(1)}>
+          Go Back
+        </button>
       ) : null}
 
       {step === 4 && (
         <div>
           <Summary formData={formData} age={age} step={step} />
-          <button id="start-over" onClick={handleStartOver} >Start Over</button>
+          <button id="start-over" onClick={handleStartOver}>
+            Start Over
+          </button>
         </div>
       )}
     </div>
   );
-}
+};
 
 export default App;
